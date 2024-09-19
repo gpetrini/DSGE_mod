@@ -148,7 +148,7 @@ for irf_iter = 1: irf_replication
     shocks_baseline(:,i_exo_var) = randn(irf_periods+drop_periods,nxs)*chol_S; %generate baseline shocks
     shocks_impulse = shocks_baseline; %use same shocks in impulse simulation
     shocks_impulse(drop_periods+1,:) = shocks_impulse(drop_periods+1,:)+impulse_vec; %add deterministic impulse
-    y_baseline = simult_(M_,options_,starting_point,oo_.dr,shocks_baseline,options_.order); %baseline simulation
+    y_baseline = simult_(M_,options_,M_,options_,starting_point,oo_.dr,shocks_baseline,options_.order); %baseline simulation
     y_shock = simult_(M_,options_,starting_point,oo_.dr,shocks_impulse,options_.order); %simulation with shock
     IRF_mat(:,:,irf_iter) = (y_shock(:,M_.maximum_lag+drop_periods+1:end)-y_baseline(:,M_.maximum_lag+drop_periods+1:end)); %add up difference between series
 end
@@ -177,7 +177,7 @@ for irf_iter = 1: irf_replication
     shocks_baseline(:,i_exo_var) = randn(irf_periods+drop_periods,nxs)*chol_S; %generate baseline shocks
     shocks_impulse = shocks_baseline; %use same shocks in impulse simulation
     shocks_impulse(drop_periods+1,:) = shocks_impulse(drop_periods+1,:)+impulse_vec; %add deterministic impulse
-    y_baseline = simult_(M_,options_,starting_point,oo_.dr,shocks_baseline,options_.order); %baseline simulation
+    y_baseline = simult_(M_,options_,,starting_point,oo_.dr,shocks_baseline,options_.order); %baseline simulation
     y_shock = simult_(M_,options_,starting_point,oo_.dr,shocks_impulse,options_.order); %simulation with shock
     IRF_mat(:,:,irf_iter) = (y_shock(:,M_.maximum_lag+drop_periods+1:end)-y_baseline(:,M_.maximum_lag+drop_periods+1:end)); %add up difference between series
 end
